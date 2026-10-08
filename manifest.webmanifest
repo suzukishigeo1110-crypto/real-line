@@ -1,0 +1,1 @@
+{ "name": "REAL LINE — LIFE RPG", "short_name": "REAL LINE", "start_url": "./portrait.html", "scope": "./", "display": "standalone", "background_color": "#101e29", "theme_color": "#14283b", "icons": [{ "src": "./realline-icon-1024.png", "sizes": "1024x1024", "type": "image/png", "purpose": "any" }] }
