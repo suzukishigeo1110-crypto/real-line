@@ -78,9 +78,54 @@ h1{letter-spacing:.05em;text-shadow:0 2px 14px #e9ac5140}
 .stage[data-form="merchant"]{background:radial-gradient(circle at 35% 42%,#e3b45b8c,transparent 64%),linear-gradient(135deg,#554023,#10202a)}
 .stage[data-form="warrior"]{background:radial-gradient(circle at 35% 42%,#d0d4e18c,transparent 64%),linear-gradient(135deg,#314357,#0b1729)}
 @media(max-height:740px){.stage{height:clamp(225px,32dvh,320px)}}
+
+/* Wearable equipment drawn as layered vector artwork */
+.hero-cutout{z-index:2}
+.wear-layer{position:absolute;inset:0;z-index:4;pointer-events:none;overflow:visible;filter:drop-shadow(0 3px 5px #0008);transition:opacity .22s ease}
+.wear-layer svg{width:100%;height:100%;overflow:visible}
+.wear-layer.shield-layer{z-index:3}.wear-layer.weapon-layer{z-index:6}
+.wear-layer.head-layer{z-index:7}.wear-layer.accessory-layer{z-index:5}
+.wear-layer.feet-layer{z-index:4}.wear-layer.body-layer{z-index:4}
+.stage .hero-gear{display:none!important}
+.stage .hero-cutout{transition:filter .25s}
+.stage[data-form="awakening"] .hero-cutout{filter:drop-shadow(0 0 17px #ff8c2e)}
+.stage[data-form="scholar"] .hero-cutout{filter:drop-shadow(0 0 12px #7ab8ff)}
+.stage[data-form="warrior"] .hero-cutout{filter:drop-shadow(0 0 12px #d7e7f8)}
+.wear-pop{animation:wear-pop .35s ease both}@keyframes wear-pop{from{opacity:.1;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+.loot-toast{position:fixed;z-index:100;left:50%;top:18%;transform:translateX(-50%);width:min(88vw,370px);padding:20px;border:2px solid #f4cf79;border-radius:16px;background:linear-gradient(135deg,#192b3e,#372819);color:#ffe5a6;text-align:center;font-weight:900;box-shadow:0 0 50px #efbb6b9c;animation:loot-in .5s ease both;pointer-events:none}
+@keyframes loot-in{from{opacity:0;transform:translate(-50%,-18px) scale(.9)}to{opacity:1;transform:translate(-50%,0) scale(1)}}
 </style></head><body><main><div class="top"><a href="./portrait.html">← ホームへ戻る</a><span>CHARACTER / EQUIPMENT</span></div><div><h1>⚔️ 冒険者の装備</h1><div class="sub">学んだ分だけ、冒険者が強くなる。ホームと同じ世界で装備を試そう！</div></div><div class="stats panel" id="stats"></div><div class="stage"><div class="character manga-hero" id="character" role="img" aria-label="漫画版しげおの冒険者。装備の状態が光とアイコンで切り替わります"><svg class="hero-cutout" viewBox="0 0 365 270" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><defs><clipPath id="shigeoHeroClip"><path d="M0 28 L30 24 L78 33 L135 65 L157 47 L174 9 L206 0 L259 0 L283 7 L298 32 L284 81 L272 103 L296 110 L319 124 L351 157 L363 201 L355 260 L0 260 Z"/></clipPath></defs><image href="./assets/real-line-manga-sprite.webp" width="800" height="510" clip-path="url(#shigeoHeroClip)"/></svg><div class="aura"></div><div class="hero-gear armor-badge" aria-hidden="true">🛡️</div><div class="hero-gear weapon-badge" aria-hidden="true">⚔️</div><div class="hero-gear aura-badge" aria-hidden="true">✨</div></div><div class="stage-caption"><strong>SHIGEO / ADVENTURER</strong><span>☕ カフェから異世界へ</span></div><div class="stage-label">装備をタップして切り替え ↕</div></div><section class="panel" aria-label="装備スロット"><div class="equip-heading"><b>⚔️ 装備スロット</b><small>タップして着せ替え</small></div><div class="equip-slots" id="equipSlots"></div><p class="cosmetic-note" id="equipDescription">装備を選ぶと冒険者の姿と演出が変化する！</p></section><section class="panel" aria-label="装備バッグ"><div class="equip-heading"><b>🎒 装備バッグ</b><small id="bagCount"></small></div><div class="bag-tabs" id="bagTabs"></div><div class="item-grid" id="itemGrid"></div><p class="cosmetic-note">装備の見た目・演出は順次強化予定。既存の学習記録と解放条件はそのまま引き継ぎます。</p></section><section class="panel" aria-label="特別な変身"><div class="equip-heading"><b>✨ 特別な変身</b><small>姿をコレクション</small></div><div class="forms" id="forms"></div></section><div class="panel"><b>🎒 従来の装備（学習報酬）</b><div class="inventory" id="inventory"></div></div><div class="panel"><b>📜 現実世界で得た知識の証</b><div class="info" id="worldRewards"></div><div class="info"><a href="./world-quests.html">現実世界のクエストに挑戦 →</a></div></div><div class="panel"><b>⚡ 習得した奥義</b><div class="info" id="skills"></div></div><div class="actions"><a href="./genres.html">📚 学習に戻る</a><a href="./portrait.html">🌳 ホームへ戻る</a></div></main><script>"use strict";const K="real-line-v01",EK="real-line-equipment-v1";let saved={},equip={};try{saved=JSON.parse(localStorage.getItem(K)||"{}")}catch{}try{equip=JSON.parse(localStorage.getItem(EK)||"{}")}catch{}const clears=Object.entries(saved.clear||{}).filter(([,v])=>v).map(([k])=>k),count=clears.length,fields=new Set(clears.map(k=>k.replace(/-\d+$/,""))),power=count>=12?3:count>=5?2:1;const gear=[{id:"armor",name:"🛡️ 鋼の鎧",need:2,detail:"2ステージクリア"},{id:"weapon",name:"⚔️ 覚醒の剣",need:5,detail:"5ステージクリア"},{id:"aura",name:"✨ 覇者のオーラ",need:12,detail:"12ステージクリア"}];const c=document.getElementById("character"),root=document.getElementById("inventory");function update(){c.dataset.power=power;gear.forEach(g=>{c.dataset[g.id]=String(count>=g.need&&equip[g.id]!==false)});root.replaceChildren();gear.forEach(g=>{const unlocked=count>=g.need,active=unlocked&&equip[g.id]!==false,b=document.createElement("button");b.className="gear";b.disabled=!unlocked;b.setAttribute("aria-pressed",String(active));const title=document.createElement("b");title.textContent=g.name;const hint=document.createElement("small");hint.textContent=unlocked?(active?"装備中 · タップで外す":"外している · タップで装備"): "🔒 "+g.detail;b.append(title,hint);b.onclick=()=>{equip[g.id]=!active;try{localStorage.setItem(EK,JSON.stringify(equip))}catch{}update()};root.append(b)})}document.getElementById("stats").replaceChildren(...[["クリア",count],["筋力",power],["習得ジャンル",fields.size]].map(([name,n])=>{const e=document.createElement("span"),b=document.createElement("b");b.textContent=n;e.append(b,document.createTextNode(name));return e}));const worldData=(()=>{try{return JSON.parse(localStorage.getItem("real-line-world-quests-v1")||"{}")||{}}catch{return {}}})();const worldTitles=[["subsidy-check","🏪 支援制度の探求者"],["law-check","⚖️ 制度の見張り人"],["business-trends","📊 時流を読む者"]];const earned=worldTitles.filter(([id])=>worldData[id]&&worldData[id].done===true);const worldReward=document.getElementById("worldRewards");worldReward.textContent="知識の証："+earned.length+" / 3 個"+(earned.length?" ／ 獲得称号："+earned.map(([,title])=>title).join("・"):" ／ 現実世界のクエストを達成して称号を手に入れよう！")+(earned.length===3?" ／ 👑 特別称号「現実世界の探究者」解放！":"");const skills=[["business","📊 未来予測"],["cafe","☕ 完全調和"],["family","❤️ 絆の盾"],["mentor","🤝 共鳴の力"],["adventure","✨ 探索の眼"],["ai","🤖 無限生成"]];const skillText=skills.filter(([f])=>clears.includes(f+"-4")).map(([,name])=>name);document.getElementById("skills").textContent=skillText.length?skillText.join("　")+" ／ 奥義のバトル効果は今後追加予定！":"ジャンルのLv.5をクリアすると奥義の称号を習得！ バトルで使える効果は今後追加予定。";update();
 ;(()=>{"use strict";
 const CK="real-line-cosmetics-v2";let state={slots:{},form:"adventurer"};try{const p=JSON.parse(localStorage.getItem(CK)||"{}");if(p&&typeof p==="object")state={slots:p.slots||{},form:p.form||"adventurer"}}catch{}
+
+const wearArt={
+"starter-sword":'<path d="M34 185 L65 111 L72 116 L48 191 Z" fill="#c5d3e1" stroke="#f8e6b6" stroke-width="2"/><path d="M35 179 L55 191 M43 187 L35 208" stroke="#a36b35" stroke-width="7" stroke-linecap="round"/>',
+"awakening-sword":'<path d="M28 190 L65 91 L76 102 L47 195 Z" fill="#e7f6ff" stroke="#f9ce68" stroke-width="4"/><path d="M32 184 L59 198 M44 191 L35 215" stroke="#dca340" stroke-width="8" stroke-linecap="round"/><path d="M64 96 L42 167" stroke="#fff" stroke-width="3"/>',
+"knowledge-staff":'<path d="M32 220 L74 110" stroke="#7a4b2e" stroke-width="10" stroke-linecap="round"/><circle cx="76" cy="99" r="18" fill="#4bb7fa" stroke="#f3d38a" stroke-width="6"/><circle cx="72" cy="94" r="7" fill="#d8faff"/>',
+"wood-shield":'<ellipse cx="286" cy="171" rx="43" ry="57" fill="#593b26" stroke="#d5a366" stroke-width="9"/><ellipse cx="286" cy="171" rx="27" ry="40" fill="#815632" stroke="#332b2a" stroke-width="3"/><circle cx="286" cy="171" r="13" fill="#b7bdc4" stroke="#f3d99d" stroke-width="3"/>',
+"steel-shield":'<path d="M246 117 Q284 91 328 117 L321 193 Q306 222 285 235 Q254 212 249 189 Z" fill="#9ca9b8" stroke="#f6d28b" stroke-width="8"/><path d="M285 110 V220 M253 149 H319" stroke="#eaf5ff" stroke-width="5"/><circle cx="285" cy="164" r="13" fill="#e6b65e"/>',
+"traveler-glasses":'<g fill="none" stroke="#2c2224" stroke-width="5"><ellipse cx="214" cy="64" rx="17" ry="12"/><ellipse cx="250" cy="63" rx="17" ry="12"/><path d="M231 63 Q233 58 235 63 M197 62 L189 58"/></g>',
+"explorer-hat":'<path d="M170 35 Q211 12 262 29 L281 48 Q226 58 170 50 Z" fill="#ad854e" stroke="#513b27" stroke-width="5"/><path d="M190 34 Q201 -4 245 8 L260 34 Z" fill="#8e693d" stroke="#e6bd79" stroke-width="4"/><path d="M190 31 Q226 39 260 31" stroke="#543c2d" stroke-width="8"/>',
+"traveler-clothes":'',
+"steel-armor":'<path d="M130 119 L172 103 L210 120 L228 196 L185 228 L127 210 Z" fill="#9ba8b4" fill-opacity=".9" stroke="#f1cf86" stroke-width="6"/><path d="M172 105 L180 214 M136 154 L218 154" stroke="#e9f1fa" stroke-width="4"/><circle cx="180" cy="157" r="13" fill="#e9bd61"/>',
+"traveler-boots":'<path d="M130 229 L170 231 L165 255 L120 259 Z M211 224 L244 221 L261 258 L216 261 Z" fill="#69452e" stroke="#d9aa65" stroke-width="5"/>',
+"red-scarf":'<path d="M153 106 Q189 128 223 108 L232 133 Q182 151 150 127 Z" fill="#b92e35" stroke="#f07b65" stroke-width="4"/><path d="M166 122 Q124 132 92 111 L111 154 Q146 151 174 137 Z" fill="#9e2635" stroke="#e76e61" stroke-width="3"/>',
+"conqueror-aura":'<circle cx="187" cy="141" r="116" fill="none" stroke="#ffd67d" stroke-width="5" stroke-dasharray="11 17" opacity=".8"/><path d="M180 0 L190 26 L200 0 M50 120 L75 135 L50 150 M310 110 L292 140 L320 152" fill="#ffe6a2" stroke="#ffc251" stroke-width="4"/>'
+};
+const layerOrder=["shield","feet","body","accessory","weapon","head"];
+function wearEquipment(){
+const hero=document.getElementById("character");hero.querySelectorAll(".wear-layer").forEach(x=>x.remove());
+layerOrder.forEach(slot=>{const item=current(slot);if(!item||!wearArt[item.id])return;const div=document.createElement("div");div.className="wear-layer "+slot+"-layer wear-pop";div.setAttribute("aria-hidden","true");const svg=document.createElementNS("http://www.w3.org/2000/svg","svg");svg.setAttribute("viewBox","0 0 365 270");svg.setAttribute("preserveAspectRatio","xMidYMid meet");svg.innerHTML=wearArt[item.id];div.append(svg);hero.append(div)});
+}
+let lastUnlocks=null;
+function showLoot(){
+const unlocked=items.filter(owned).map(i=>i.id);
+const key="real-line-equipment-seen-v2";
+let seen;try{seen=JSON.parse(localStorage.getItem(key)||"null")}catch{}
+if(Array.isArray(seen)){const gained=items.filter(i=>unlocked.includes(i.id)&&!seen.includes(i.id));if(gained.length){const t=document.createElement("div");t.className="loot-toast";t.setAttribute("role","status");t.textContent="✨ 新装備解放！ "+gained.map(x=>x.name).join("・");document.body.append(t);setTimeout(()=>t.remove(),3800)}}
+try{localStorage.setItem(key,JSON.stringify(unlocked))}catch{}
+}
+
 const categories=[["all","すべて"],["weapon","武器"],["shield","盾"],["head","頭"],["body","胴"],["feet","足"],["accessory","装飾"]];
 const items=[
 {id:"starter-sword",slot:"weapon",name:"旅人の剣",emoji:"🗡️",rarity:"normal",need:0},
@@ -111,7 +156,8 @@ const chosenForm=forms.find(f=>f.id===state.form);const formUnlocked=chosenForm&
 const stage=document.querySelector(".stage");stage.dataset.form=state.form;
 const sword=current("weapon"),body=current("body"),accessory=current("accessory");document.getElementById("equipDescription").textContent="装備中："+[sword.name,body.name,accessory.name].join(" ／ ");
 const char=document.getElementById("character");char.dataset.weapon=String(sword.id==="awakening-sword");char.dataset.armor=String(body.id==="steel-armor");char.dataset.aura=String(accessory.id==="conqueror-aura"||state.form==="awakening");
+wearEquipment();
 const caption=document.querySelector(".stage-caption strong");caption.textContent="SHIGEO / "+({adventurer:"ADVENTURER",warrior:"WARRIOR",scholar:"SCHOLAR",merchant:"MERCHANT",awakening:"AWAKENED"}[state.form]);
 }
-render();
+render();showLoot();
 })();</script></body></html>
