@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 580">
+<defs><linearGradient id="coat" x2="1" y2="1"><stop stop-color="#51677a"/><stop offset=".48" stop-color="#293e53"/><stop offset="1" stop-color="#15273a"/></linearGradient><linearGradient id="skin" x2="1" y2="1"><stop stop-color="#f5c795"/><stop offset="1" stop-color="#c98968"/></linearGradient><linearGradient id="metal" x2="1" y2="1"><stop stop-color="#fff3c5"/><stop offset=".4" stop-color="#bdcbd0"/><stop offset="1" stop-color="#667789"/></linearGradient><linearGradient id="scarf" x2="1" y2="1"><stop stop-color="#ff936b"/><stop offset=".55" stop-color="#c3423d"/><stop offset="1" stop-color="#792b36"/></linearGradient><filter id="shadow"><feGaussianBlur stdDeviation="10"/></filter></defs>
+<ellipse cx="206" cy="547" rx="137" ry="18" fill="#07101a" opacity=".65" filter="url(#shadow)"/>
+<!-- cape -->
+<path d="M145 235Q90 245 70 364L47 518Q117 552 185 517L236 305 285 522Q354 540 378 503L344 332Q319 248 274 231Z" fill="#6d323a" stroke="#ed9c6a" stroke-width="5"/>
+<!-- boots -->
+<path d="M152 439L151 524Q123 536 105 548Q99 558 118 565H193L204 542 199 440Z" fill="#3c2931" stroke="#bc8859" stroke-width="6"/><path d="M222 440L222 535 236 564H311Q331 560 314 547L273 521 278 439Z" fill="#3c2931" stroke="#bc8859" stroke-width="6"/>
+<!-- trousers -->
+<path d="M141 368L138 477Q164 493 204 478L215 409 226 479Q266 494 291 475L281 368Z" fill="#263646" stroke="#9b826c" stroke-width="5"/>
+<!-- body -->
+<path d="M131 245Q156 227 192 226H235Q276 224 301 253L307 397Q207 426 117 393Z" fill="url(#coat)" stroke="#d5a766" stroke-width="6"/>
+<path d="M176 244L211 277 246 242 255 379 205 395 165 375Z" fill="#b8b5a5" stroke="#6e8b91" stroke-width="5"/>
+<path d="M207 270L212 392" stroke="#6d5446" stroke-width="8"/><path d="M149 348Q210 367 282 344" fill="none" stroke="#c18a4c" stroke-width="16"/><rect x="194" y="344" width="38" height="28" rx="5" fill="#e4bd71" stroke="#6d4529" stroke-width="6"/>
+<!-- arms and gloves -->
+<path d="M132 254Q106 245 96 280L73 387Q67 413 94 422Q114 428 123 399L153 299Z" fill="url(#coat)" stroke="#d0a36d" stroke-width="6"/><path d="M288 254Q312 246 324 284L354 389Q359 417 336 425Q311 429 301 398L273 300Z" fill="url(#coat)" stroke="#d0a36d" stroke-width="6"/>
+<path d="M69 386L118 400 112 434Q94 452 73 434Z" fill="#513b38" stroke="#bd885d" stroke-width="5"/><path d="M308 399L356 384 363 427Q345 447 315 430Z" fill="#513b38" stroke="#bd885d" stroke-width="5"/>
+<!-- neck -->
+<path d="M181 198H239V252Q213 272 183 246Z" fill="url(#skin)" stroke="#9b5b48" stroke-width="5"/>
+<!-- ears, face -->
+<ellipse cx="151" cy="158" rx="19" ry="28" fill="#db9d76"/><ellipse cx="270" cy="158" rx="19" ry="28" fill="#db9d76"/>
+<path d="M147 116Q149 65 210 58Q275 68 275 124L267 185Q258 225 212 235Q162 228 150 184Z" fill="url(#skin)" stroke="#a86b52" stroke-width="5"/>
+<!-- curls -->
+<g fill="#302b35" stroke="#171e2b" stroke-width="4"><circle cx="153" cy="105" r="28"/><circle cx="165" cy="73" r="31"/><circle cx="198" cy="65" r="33"/><circle cx="234" cy="67" r="32"/><circle cx="260" cy="89" r="31"/><circle cx="272" cy="120" r="23"/><circle cx="141" cy="129" r="20"/></g>
+<g fill="#51404a" opacity=".7"><circle cx="167" cy="74" r="10"/><circle cx="222" cy="56" r="11"/><circle cx="260" cy="96" r="9"/></g>
+<!-- eyes and glasses -->
+<path d="M168 154Q183 146 198 155M222 155Q238 146 252 154" stroke="#563b36" stroke-width="5" fill="none"/>
+<g stroke="#372f37" stroke-width="7" fill="#e4f3f3" fill-opacity=".19"><rect x="161" y="145" width="46" height="34" rx="14"/><rect x="214" y="145" width="46" height="34" rx="14"/><path d="M207 154Q210 149 214 154M161 156L148 152M260 156L274 151"/></g>
+<path d="M208 161L202 184 214 187" fill="none" stroke="#b8795c" stroke-width="4" stroke-linecap="round"/><path d="M187 202Q211 224 239 199" fill="none" stroke="#793f3e" stroke-width="6" stroke-linecap="round"/>
+<circle cx="170" cy="187" r="9" fill="#e88d78" opacity=".35"/><circle cx="250" cy="187" r="9" fill="#e88d78" opacity=".35"/>
+<!-- scarf -->
+<path d="M166 233Q211 262 253 228L267 251Q223 285 171 258Z" fill="url(#scarf)" stroke="#f2a071" stroke-width="5"/><path d="M242 245Q276 272 279 329L260 344Q235 303 222 270Z" fill="url(#scarf)" stroke="#f2a071" stroke-width="4"/>
+<!-- chest emblem -->
+<circle cx="208" cy="319" r="21" fill="#6c4d35" stroke="#e9be74" stroke-width="5"/><path d="M208 301L215 314 229 319 215 325 208 340 201 325 187 319 201 314Z" fill="#f9df9c"/>
+<!-- black cat -->
+<path d="M333 483Q364 463 376 490Q395 530 371 547Q334 568 306 538Z" fill="#1a1b29" stroke="#88765f" stroke-width="4"/><path d="M318 498L311 463 337 479 357 467 361 503Z" fill="#1a1b29" stroke="#88765f" stroke-width="4"/><ellipse cx="330" cy="507" rx="5" ry="7" fill="#e9c46e"/><ellipse cx="352" cy="507" rx="5" ry="7" fill="#e9c46e"/><path d="M339 520l5 3 5-3" fill="none" stroke="#f4c49b" stroke-width="3"/><path d="M370 534Q407 518 394 481" fill="none" stroke="#1a1b29" stroke-width="14" stroke-linecap="round"/>
+</svg>
